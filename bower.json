@@ -1,0 +1,16 @@
+{
+  "name": "SimpleProject",
+  "description": "My awesome blog",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "vendor/bower_dl",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.0",
+    "bootstrap": "^3.3.7",
+    "bootstrap-select": "^1.12.2"
+  }
+}

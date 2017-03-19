@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/var/www/mylearninglaravel/app/Providers/AuthServiceProvider.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Http/Controllers/Admin/DictionaryController.php</file>
+            <file>file:/var/www/mylearninglaravel/config/app.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/users/index.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/.env</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/users/edit.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/roles/create.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/auth/register.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/app/User.php</file>
+            <file>file:/var/www/mylearninglaravel/vendor/composer/autoload_files.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Providers/AppServiceProvider.php</file>
+            <file>file:/var/www/mylearninglaravel/database/seeds/MessageStateTableSeeder.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Http/Controllers/Admin/RoleController.php</file>
+            <file>file:/var/www/mylearninglaravel/vendor/composer/autoload_real.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/permissions/index.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Http/Controllers/Admin/UserController.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/permissions/show.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/roles/edit.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/permissions/create.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/users/create.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/roles/index.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/messages/list.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/database/migrations/2014_10_12_100000_create_password_resets_table.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/users/show.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/auth/login.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/database/migrations/2017_03_18_095209_create_message_table.php</file>
+            <file>file:/var/www/mylearninglaravel/database/migrations/2014_10_12_000000_create_users_table.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Http/routes.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/messages/create.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/permissions/edit.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Models/Core/Dictionary.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Providers/RouteServiceProvider.php</file>
+            <file>file:/var/www/mylearninglaravel/database/migrations/2017_03_18_095200_create_messagestate_table.php</file>
+            <file>file:/var/www/mylearninglaravel/vendor/composer/autoload_psr4.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Http/Controllers/Admin/PermissionController.php</file>
+            <file>file:/var/www/mylearninglaravel/resources/views/roles/show.blade.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Http/Controllers/User/MessageController.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Providers/EventServiceProvider.php</file>
+            <file>file:/var/www/mylearninglaravel/app/Http/Controllers/Auth/AuthController.php</file>
+        </group>
+    </open-files>
+</project-private>
