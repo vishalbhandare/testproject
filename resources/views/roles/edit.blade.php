@@ -37,14 +37,28 @@
                              <textarea type="text" class="form-control" name="description">{{ $role->description }}</textarea>    
                          </div>
                 </div>
-    
-  <div class="form-group">
+      <div class="form-group">
+                        <label for="permissions" class="control-label col-sm-2">Permission:</label>
+                         <div class="col-sm-10">
+                            
+                           <select class="selectpicker" multiple name='permissions[]'>
+                                @foreach ($permissions as $permission) 
+                                    @if (in_array($permission->name,array_keys($role->getPermissions())))
+                                    <option value="{{ $permission->id }}" selected>{{ $permission->name }}</option>
+                                    @else
+                                    <option value="{{ $permission->id }}" >{{ $permission->name }}</option>                            
+                                    @endif
+                                @endforeach
+                              </select>  
+                         </div>
+                </div>
+ <!-- <div class="form-group">
                         <label for="role" class="control-label col-sm-2">Level:</label>
                          <div class="col-sm-10">
                              <input type="text" class="form-control" name="level" value="{{ $role->level }}">
                            
                          </div>
-                </div>
+                </div> -->
 
   <div class="form-group">        
       <div class="col-sm-offset-2 col-sm-10">

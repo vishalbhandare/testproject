@@ -1,21 +1,28 @@
 @extends('layout.app')
 
 @section('content')
-<h1>All Dictionary</h1>
+
 
   @if(Session::has('success'))
             <div class="alert-box success">
                 <h2>{{ Session::get('success') }}</h2>
             </div>
  @endif
-
+ <div class="container">
+     <div class="row row-eq-height">
+        <div class="col-md-8 col-centered"><h1>All Dictionary</h1></div>
+        <div class="col-md-4 col-centered"  >
+            <a class="btn btn-small btn-success " style="vertical-align: middle" href="{{ URL::to('/dictionary/create') }}">Create Word</a>
+        </div>
+      </div> 
+ </div>
 <table class="table table-striped table-bordered">
        <thead>
         <tr>
             <td>ID</td>
             <td>Word</td>
             <td>Description</td>
-            <td>Roles</td>
+            <td>Roles Allowed </td>
             <td>Actions</td>
         </tr>
     </thead>
@@ -25,7 +32,13 @@
             <td>{{ $value->id }}</td>
             <td>{{ $value->textword }}</td>
              <td>{{ $value->description }}</td>
-            <td></td>
+             <td> 
+                   @foreach ($value->roles()->lists('name') as $name) 
+                    {{ $name }}
+                                
+                  @endforeach
+                 
+             </td>
 
             <!-- we will also add show, edit, and delete buttons -->
             <td>

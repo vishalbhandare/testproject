@@ -39,11 +39,26 @@
                          </div>
                 </div>
     
-  <div class="form-group">
+  <!--<div class="form-group">
                         <label for="level" class="control-label col-sm-2">Level:</label>
                          <div class="col-sm-10">
                                <input type="text" class="form-control" name="level" value="{{ old('level') }}">
                          
+                         </div>
+                </div>
+-->
+ <div class="form-group">
+                        <label for="permissions" class="control-label col-sm-2">Permission:</label>
+                         <div class="col-sm-10">
+                             <select class="selectpicker" multiple name='permissions[]'>
+                                @foreach ($permissions as $permission) 
+                                
+                                <option value="{{$permission->id}}">{{$permission->name}}</option>
+                                
+                                @endforeach
+                              </select>
+
+                          <!-- <textarea type="text" class="form-control" name="role"></textarea>     -->
                          </div>
                 </div>
 

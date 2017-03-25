@@ -30,21 +30,23 @@
 
     
  
-       <div class="form-group">
-                        <label for="roles" class="control-label col-sm-2">Roles:</label>
+   <div class="form-group">
+                        <label for="role" class="control-label col-sm-2">Role:</label>
                          <div class="col-sm-10">
-                             <!--<textarea type="text" class="form-control" name="roles"></textarea> -->  
-                             <select  name="roles" multiple>
-                                 @if (isset($roles))
-                                  @foreach($roles as $key => $value)   
-                                 <option>{{ $value->name }}</option>
-                                     @endforeach  
-                                 @endif    
+                             <select class="selectpicker" multiple name='roles[]'>
+                                @foreach ($roles as $role) 
+                                @if (in_array($role->id,$enabled_roles))
+                                <option value="{{$role->id}}" selected>{{$role->name}}</option>
+                                @else
+                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                @endif
+                                
+                                @endforeach
                               </select>
 
+                          <!-- <textarea type="text" class="form-control" name="role"></textarea>     -->
                          </div>
                 </div>
-    
  
 
   <div class="form-group">        

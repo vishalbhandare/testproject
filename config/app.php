@@ -135,8 +135,8 @@ return [
         Illuminate\Session\SessionServiceProvider::class,
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
+        Kodeine\Acl\AclServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
-        Bican\Roles\RolesServiceProvider::class,
         /*
          * Application Service Providers...
          */

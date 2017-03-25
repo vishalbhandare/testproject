@@ -13,10 +13,10 @@
 
    <input type="hidden" class="form-control" name="_method" value="PUT">
    <div class="form-group">
-                        <label for="Name" class="control-label col-sm-2">Name:</label>
+                        <label for="Username" class="control-label col-sm-2">Username:</label>
                          <div class="col-sm-10">
                            
-                             <input type="text" class="form-control" name="name" value="{{ $user->name }}">
+                             <input type="text" class="form-control" name="username" value="{{ $user->username }}">
                          </div>
                 </div>
     
@@ -42,10 +42,18 @@
                 </div>
     
   <div class="form-group">
-                        <label for="role" class="control-label col-sm-2">Role:</label>
+                        <label for="roles" class="control-label col-sm-2">Role:</label>
                          <div class="col-sm-10">
-                           <textarea type="text" class="form-control" name="role">
-                           </textarea>     
+                            
+                           <select class="selectpicker" multiple name='roles[]'>
+                                @foreach ($roles as $role) 
+                               @if ($user->hasRole($role->name))
+                               <option value="{{ $role->id }}" selected>{{ $role->name }}</option>
+                               @else
+                               <option value="{{ $role->id }}">{{ $role->name }}</option>
+                               @endif
+                                @endforeach
+                              </select>  
                          </div>
                 </div>
 

@@ -13,10 +13,9 @@
 
    
    <div class="form-group">
-                        <label for="Name" class="control-label col-sm-2">Name:</label>
-                         <div class="col-sm-10">
-                           
-                             <input type="text" class="form-control" name="name" value="{{ old('name') }}">
+                        <label for="username" class="control-label col-sm-2">Username:</label>
+                         <div class="col-sm-10">                           
+                             <input type="text" class="form-control" name="username" value="{{ old('username') }}">
                          </div>
                 </div>
     
@@ -41,7 +40,15 @@
   <div class="form-group">
                         <label for="role" class="control-label col-sm-2">Role:</label>
                          <div class="col-sm-10">
-                           <textarea type="text" class="form-control" name="role"></textarea>     
+                             <select class="selectpicker" multiple name='roles[]'>
+                                @foreach ($roles as $role) 
+                                
+                                <option value="{{$role->id}}">{{$role->name}}</option>
+                                
+                                @endforeach
+                              </select>
+
+                          <!-- <textarea type="text" class="form-control" name="role"></textarea>     -->
                          </div>
                 </div>
 

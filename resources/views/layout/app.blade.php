@@ -17,7 +17,7 @@
 </head>
 <body>
 
-
+      
       <!-- Static navbar -->
       <nav class="navbar navbar-default">
         <div class="container-fluid">
@@ -33,11 +33,17 @@
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
               <li class="active"><a href="/">Home</a></li>
-              <li><a href="/auth/login">Login</a></li>
+              @unless (Auth::check())
+                @if (!Request::is('auth/login'))
+                <li><a href="/auth/login">Login</a></li>
+                @endif
+             @endunless
+              @if (Auth::check())
                <li><a href="/auth/logout">Logout</a></li>
-              <li><a href="/users">Manage Users</a></li>
-               <li><a href="/roles">Manage Roles</a></li>
-              <li><a href="/permissions">Manage Permission</a></li>
+              @endif
+              
+           
+              
               <li><a href="/dictionary">Manage Words</a></li>
               <li><a href="/message/compose">Send Message</a></li>
              <!-- <li class="dropdown">
@@ -55,6 +61,16 @@
             </ul>
               
           <ul class="nav navbar-nav navbar-right">
+            
+                <li>  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
+                    <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/users">Manage Users</a></li>
+                        <li><a href="/roles">Manage Roles</a></li>
+                       <li><a href="/permissions">Manage Permission</a></li>
+                    </ul>
+               </li>
+             
               @if (isset($notificationcount) &&  $notificationcount > 0)
               <li class="active"><a href="/message/list" style="color:red">Notification ({{$notificationcount}})</a></li>
               @else

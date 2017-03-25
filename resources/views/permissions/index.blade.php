@@ -1,14 +1,21 @@
 @extends('layout.app')
 
 @section('content')
-<h1>All Permission</h1>
+
 
   @if(Session::has('success'))
             <div class="alert-box success">
                 <h2>{{ Session::get('success') }}</h2>
             </div>
  @endif
-
+ <div class="container">
+     <div class="row row-eq-height">
+        <div class="col-md-8 col-centered"><h1>All Permission</h1></div>
+        <div class="col-md-4 col-centered"  >
+            <a class="btn btn-small btn-success " style="vertical-align: middle" href="{{ URL::to('/permissions/create') }}">Create New Permission</a>
+        </div>
+      </div> 
+ </div>
 <table class="table table-striped table-bordered">
        <thead>
         <tr>

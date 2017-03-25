@@ -1,33 +1,49 @@
 @extends('layout.app')
 
 @section('content')
-<h1>All Roles</h1>
 
-  @if(Session::has('success'))
+
+
+ @if(Session::has('success'))
             <div class="alert-box success">
                 <h2>{{ Session::get('success') }}</h2>
             </div>
  @endif
 
-<table class="table table-striped table-bordered">
+
+ <div class="container">
+     <div class="row row-eq-height">
+        <div class="col-md-8 col-centered"><h1>All Roles</h1></div>
+        <div class="col-md-4 col-centered"  >
+            <a class="btn btn-small btn-success " style="vertical-align: middle" href="{{ URL::to('/roles/create') }}">Create New Role</a>
+        </div>
+      </div> 
+ </div>
+
+ <table class="table table-striped table-bordered text-center">
        <thead>
         <tr>
             <td>ID</td>
             <td>Name</td>
             <td>Slug</td>
             <td>Description</td>
-             <td>Level</td>
+             <td>Permissions</td>
             <td>Actions</td>
         </tr>
     </thead>
       <tbody>
-          @foreach($roles as $key => $value)
+    <?php if(isset($roles)) { ?>
+    @foreach($roles as $key => $value)
         <tr>
             <td>{{ $value->id }}</td>
             <td>{{ $value->name }}</td>
             <td>{{ $value->slug }}</td>
             <td>{{ $value->description }}</td>
-            <td></td>
+            <td>                
+                @foreach ($value->getPermissions() as $key=>$permission)
+                 {{ $key }}
+                @endforeach
+            </td>
 
             <!-- we will also add show, edit, and delete buttons -->
             <td>
@@ -44,6 +60,7 @@
             </td>
         </tr>
     @endforeach
+    <?php } ?>
     </tbody>
 </table>
 
