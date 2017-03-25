@@ -8,7 +8,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\BaseController;
 use App\User;
 use Auth;
-
+use App\Models\Core\Dictionary;
 use App\Models\User\Message;
 use Illuminate\Http\Request;
 use Validator;
@@ -32,6 +32,36 @@ class MessageController extends BaseController
         return view('messages.create', ['userlist'=>$users]);
     } 
     
+    public function findBadWord($message){
+        
+        // get all the dictionary
+        $dictionary = Dictionary::all()->keyBy('textword');
+       
+        
+        $wordRestricted = array_keys($dictionary->toArray());
+
+        $enteredWord = str_word_count($message, 2);
+        $result = array_intersect($wordRestricted, $enteredWord);
+        $restrictedwordcount = array();
+        $currentUserId = Auth::user()->roles()->first()->id;
+       
+        if(count($result) > 0){
+           foreach($result as $word){
+               
+               $userIdList = $dictionary[$word]->roles()->lists('role_id')->toArray();
+               
+               //print_r(array_search($currentUserId,$userIdList));
+               if(array_search($currentUserId,$userIdList)===false) {
+                   if(!isset($restrictedwordcount[$word])){
+                    $restrictedwordcount[$word] = 0;
+                   }                   
+                   $restrictedwordcount[$word]++;                  
+               }
+           }
+        }
+        return $restrictedwordcount;
+    }
+    
     /**
      * Save Message to DB
      * 
@@ -48,6 +78,13 @@ class MessageController extends BaseController
             return redirect('/message/compose')->withInput()->withErrors($validator);
         }
     
+        $badWords = $this->findBadWord($request->message);
+        
+        
+        if(count($badWords)>0){
+                //$validator->errors()->add();    
+                return redirect('/message/compose')->withInput()->withErrors(["Entered word is Prohibitted: ".implode(",",array_keys($badWords))]);
+        }
         $message = new Message;
         $message->content = $request->message;
         $message->sender_id = Auth::user()->id;

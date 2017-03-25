@@ -32,7 +32,7 @@
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="/">Home</a></li>
+              <li class="{{ Request::path() == '/' ? 'active' : '' }}"><a href="/">Home</a></li>
               @unless (Auth::check())
                 @if (!Request::is('auth/login'))
                 <li><a href="/auth/login">Login</a></li>
@@ -44,8 +44,8 @@
               
            
               
-              <li><a href="/dictionary">Manage Words</a></li>
-              <li><a href="/message/compose">Send Message</a></li>
+              <li class="{{ Request::path() == 'dictionary' ? 'active' : '' }}"><a href="/dictionary"  >Manage Words</a></li>
+              <li class="{{ Request::path() == 'message/compose' ? 'active' : '' }}"><a href="/message/compose">Send Message</a></li>
              <!-- <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                 <ul class="dropdown-menu">
