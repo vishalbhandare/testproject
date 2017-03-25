@@ -12,7 +12,7 @@ use App\Models\Core\DictionaryBannedRole;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-
+use \Kodeine\Acl\Models\Eloquent\Role;
 
 class DictionaryController extends BaseController
 {
@@ -25,7 +25,7 @@ class DictionaryController extends BaseController
     {
         // get all the dictionary
         $dictionary = Dictionary::all();
-
+         
         // load the view and pass the users
         return view('dictionary.index',['dictionary'=> $dictionary]);
     }
@@ -37,8 +37,11 @@ class DictionaryController extends BaseController
      */
     public function create()
     {
+         // get all the users
+        $roles = Role::all();
+         
          // load the create form (app/views/dictionary/create.blade.php)
-        return view('dictionary.create');
+        return view('dictionary.create',['roles'=> $roles]);
     }
 
     /**
@@ -61,14 +64,17 @@ class DictionaryController extends BaseController
             'textword' => $request->textword,
             'description' => $request->description==null?'':$request->description,
         ]);
-       
+        
         
         //Check if User got created
         if (!$dictionary)
         {           
            return redirect('/dictionary/create')->withInput()->withErrors(['Dictionary could not be created, Try Again']);
         }else{
-           $dictionaryId = $dictionary->id; 
+          
+           $dictionary->save();
+          
+           $dictionary->roles()->attach(Input::get('roles'));
            // Assign permission to user
            \Session::flash('success','Dictionary '.$request['textword'].' created successfully.');
            return redirect('/dictionary');
@@ -101,9 +107,11 @@ class DictionaryController extends BaseController
     {
             // get the User
         $dictionary = Dictionary::find($id);
-
+      // get all the users
+        $roles = Role::all();
+        
         // show the view and pass the User to it
-        return view('dictionary.edit',['dictionary'=> $dictionary]);
+        return view('dictionary.edit',['dictionary'=> $dictionary,'roles'=> $roles,'enabled_roles'=>$dictionary->roles()->lists('role_id')->toArray()]);
     }
 
     /**
@@ -126,9 +134,10 @@ class DictionaryController extends BaseController
               // get the User
             $dictionary = Dictionary::find($id);
             $dictionary->textword       = Input::get('textword');           
-            $dictionary->description       = Input::get('description');            
-// $user->role = Input::get('role');
+            $dictionary->description       = Input::get('description');                      
             $dictionary->save();
+            $dictionary->roles()->detach();
+            $dictionary->roles()->attach(Input::get('roles'));  
               // redirect
             \Session::flash('message', 'Successfully updated Dictionary!');
             return redirect('/dictionary');            

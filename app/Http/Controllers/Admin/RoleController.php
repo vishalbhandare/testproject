@@ -70,7 +70,7 @@ class RoleController extends BaseController
         }else{
            if($role->getPermissions())
             $role->removePermission($role->getPermissions());
-           
+           if($request->permissions)
            $role->assignPermission($request->permissions);
            // Assign permission to user
            \Session::flash('success','Role '.$request['name'].' created successfully.');
@@ -134,7 +134,7 @@ class RoleController extends BaseController
             $role->name       = Input::get('name');
             $role->slug      = Input::get('slug');
              $role->description      = Input::get('description');
-        
+        if(Input::get('permissions'))
            $role->assignPermission(Input::get('permissions'));
            // $user->role = Input::get('role');
             $role->save();

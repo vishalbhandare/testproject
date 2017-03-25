@@ -35,3 +35,4 @@ Route::resource('users', 'Admin\UserController');
 Route::resource('roles', 'Admin\RoleController');
 Route::resource('permissions', 'Admin\PermissionController');
 Route::resource('dictionary', 'Admin\DictionaryController');
+
