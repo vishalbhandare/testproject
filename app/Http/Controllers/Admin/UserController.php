@@ -10,8 +10,7 @@ use App\User;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-
-
+use \Kodeine\Acl\Models\Eloquent\Role;
 class UserController extends BaseController
 {
        /**
@@ -22,10 +21,13 @@ class UserController extends BaseController
     public function index()
     {
         // get all the users
-        $users = User::all();
-
+        //$users = User::all();
+       
+        $userlist = \Kodeine\Acl\Models\Eloquent\User::all();
+      
+       
         // load the view and pass the users
-        return view('users.index',['users'=> $users]);
+        return view('users.index',['users'=> $userlist]);
     }
 
     /**
@@ -35,8 +37,11 @@ class UserController extends BaseController
      */
     public function create()
     {
+        // get all the users
+        $roles = Role::all();
+    
          // load the create form (app/views/nerds/create.blade.php)
-        return view('users.create');
+        return view('users.create',array('roles'=>$roles));
     }
 
     /**
@@ -47,8 +52,9 @@ class UserController extends BaseController
     public function store(Request $request)
     {
          $validator = Validator::make($request->all(), [
+            'username' => 'required|unique:users',
             'email' => 'required|unique:users|email',
-            'name' => 'required',
+            'password' => 'required',
         ]);
         
         if ($validator->fails()) {
@@ -56,7 +62,7 @@ class UserController extends BaseController
         }
         
         $user = User::create([
-            'name' => $request['name'],
+            'username' => $request['username'],
             'email' => $request['email'],
             'password' => bcrypt($request['password']),
         ]);
@@ -66,9 +72,11 @@ class UserController extends BaseController
         {           
            return redirect('/users/create')->withInput()->withErrors(['User could not be created, Try Again']);
         }else{
-           $createdUserId = $user->id; 
+           if($request->roles){
+               $user->assignRole($request->roles);
+           }           
            // Assign permission to user
-           \Session::flash('success','User '.$request['name'].' created successfully.');
+           \Session::flash('success','User '.$request['username'].' created successfully.');
            return redirect('/users');
         }  
         
@@ -97,11 +105,14 @@ class UserController extends BaseController
      */
     public function edit($id)
     {
+         // get all the users
+        $roles = Role::all();
+        
             // get the User
         $user = User::find($id);
 
         // show the view and pass the User to it
-        return view('users.edit',['user'=> $user]);
+        return view('users.edit',['user'=> $user,'roles'=>$roles]);
     }
 
     /**
@@ -114,7 +125,8 @@ class UserController extends BaseController
     {
         $rules = array(
             'email' => 'required|unique:users,email,'.$id,
-            'name' => 'required',
+            'username' => 'required|unique:users,username,'.$id,
+            'roles'=>"required"
         );
         
         $validator = Validator::make(Input::all(), $rules);
@@ -122,14 +134,18 @@ class UserController extends BaseController
         if ($validator->fails()) {
             return redirect('/users/'.$id.'/edit')->withInput(Input::except('password'))->withErrors($validator);
         }else{
+           
+            
               // get the User
             $user = User::find($id);
-            $user->name       = Input::get('name');
+            $user->username       = Input::get('username');
             $user->email      = Input::get('email');
             if(Input::get('passwordreset')){
                 $user->password = bcrypt(Input::get('password'));
             }
-           // $user->role = Input::get('role');
+            //$user->assInput::get('role');
+            $user->revokeAllRoles();
+            $user->assignRole(Input::get('roles'));
             $user->save();
               // redirect
             \Session::flash('message', 'Successfully updated User!');

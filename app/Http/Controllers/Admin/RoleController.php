@@ -10,8 +10,8 @@ use App\User;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
-use Bican\Roles\Models\Role;
-
+use Kodeine\Acl\Models\Eloquent\Role;
+use Kodeine\Acl\Models\Eloquent\Permission;
 class RoleController extends BaseController
 {
        /**
@@ -23,7 +23,7 @@ class RoleController extends BaseController
     {
         // get all the users
         $roles = Role::all();
-
+         
         // load the view and pass the users
         return view('roles.index',['roles'=> $roles]);
     }
@@ -35,8 +35,9 @@ class RoleController extends BaseController
      */
     public function create()
     {
+        $permissions = Permission::all();
          // load the create form (app/views/roles/create.blade.php)
-        return view('roles.create');
+        return view('roles.create',array("permissions"=>$permissions));
     }
 
     /**
@@ -58,8 +59,7 @@ class RoleController extends BaseController
         $role = Role::create([
             'name' => $request->name,
             'slug' => $request->slug,
-            'description' => $request->description, // optional
-            'level' => $request->level, // optional, set to 1 by default
+            'description' => $request->description
         ]);
        
         
@@ -68,7 +68,10 @@ class RoleController extends BaseController
         {           
            return redirect('/roles/create')->withInput()->withErrors(['Role could not be created, Try Again']);
         }else{
-           $roleId = $role->id; 
+           if($role->getPermissions())
+            $role->removePermission($role->getPermissions());
+           
+           $role->assignPermission($request->permissions);
            // Assign permission to user
            \Session::flash('success','Role '.$request['name'].' created successfully.');
            return redirect('/roles');
@@ -99,11 +102,12 @@ class RoleController extends BaseController
      */
     public function edit($id)
     {
+        $permissions = Permission::all();
             // get the User
         $role = Role::find($id);
-
+      
         // show the view and pass the User to it
-        return view('roles.edit',['role'=> $role]);
+        return view('roles.edit',['role'=> $role,"permissions"=>$permissions]);
     }
 
     /**
@@ -130,7 +134,8 @@ class RoleController extends BaseController
             $role->name       = Input::get('name');
             $role->slug      = Input::get('slug');
              $role->description      = Input::get('description');
-           
+        
+           $role->assignPermission(Input::get('permissions'));
            // $user->role = Input::get('role');
             $role->save();
               // redirect
