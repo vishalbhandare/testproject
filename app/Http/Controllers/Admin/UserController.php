@@ -6,11 +6,14 @@ namespace App\Http\Controllers\Admin;
  * and open the template in the editor.
  */
 use App\Http\Controllers\BaseController;
-use App\User;
+
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use \Kodeine\Acl\Models\Eloquent\Role;
+use \Kodeine\Acl\Models\Eloquent\User;
+use Kodeine\Acl\Models\Eloquent\Permission;
+
 class UserController extends BaseController
 {
        /**

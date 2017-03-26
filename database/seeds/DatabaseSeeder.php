@@ -15,7 +15,7 @@ class DatabaseSeeder extends Seeder
         Model::unguard();
 
         $this->call(MessageStateTableSeeder::class);
-
+        $this->call(DummyDataSeeder::class);
         Model::reguard();
     }
 }

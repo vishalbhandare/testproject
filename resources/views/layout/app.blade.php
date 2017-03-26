@@ -44,8 +44,9 @@
               
            
               
-              <li class="{{ Request::path() == 'dictionary' ? 'active' : '' }}"><a href="/dictionary"  >Manage Words</a></li>
-              <li class="{{ Request::path() == 'message/compose' ? 'active' : '' }}"><a href="/message/compose">Send Message</a></li>
+          @if (CustomAuth::hasPermission('message.compose'))
+                 <li class="{{ Request::path() == 'message/compose' ? 'active' : '' }}"><a href="/message/compose">Send Message</a></li>
+           @endif    
              <!-- <li class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
                 <ul class="dropdown-menu">
@@ -61,21 +62,41 @@
             </ul>
               
           <ul class="nav navbar-nav navbar-right">
-            
-                <li>  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
+              @if (Auth::check())
+              <li>
+                  <a href="#">Hi, {{ Auth::user()->username }}</a>
+              </li>
+              @endif
+              
+                @if (CustomAuth::hasPermission('users.index') || CustomAuth::hasPermission('roles.index') || CustomAuth::hasPermission('roles.index')||CustomAuth::hasPermission('dictionary.index'))
+                <li class="{{ (Request::path() == 'users'||Request::path() == 'roles'||Request::path() == 'permissions') ? 'active' : '' }}">  <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin
                     <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        <li><a href="/users">Manage Users</a></li>
-                        <li><a href="/roles">Manage Roles</a></li>
-                       <li><a href="/permissions">Manage Permission</a></li>
+                        
+                        @if (CustomAuth::hasPermission('users.index'))
+                        <li {{ Request::path() == 'users' ? 'active' : '' }}><a href="/users">Manage Users</a></li>
+                        @endif
+                        
+                        @if (CustomAuth::hasPermission('roles.index'))
+                        <li {{ Request::path() == 'roles' ? 'active' : '' }}><a href="/roles">Manage Roles</a></li>
+                        @endif
+                        
+                        @if (CustomAuth::hasPermission('roles.index'))
+                       <li {{ Request::path() == 'permissions' ? 'active' : '' }}><a href="/permissions">Manage Permission</a></li>
+                        @endif
+                        @if (CustomAuth::hasPermission('dictionary.index'))
+                        <li class="{{ Request::path() == 'dictionary' ? 'active' : '' }}"><a href="/dictionary"  >Manage Words</a></li>
+                        @endif    
                     </ul>
                </li>
-             
-              @if (isset($notificationcount) &&  $notificationcount > 0)
-              <li class="active"><a href="/message/list" style="color:red">Notification ({{$notificationcount}})</a></li>
-              @else
-              <li class="active"><a href="/message/list" >Notification </a></li>
               @endif
+                @if (CustomAuth::hasPermission('message.list'))
+                    @if (isset($notificationcount) &&  $notificationcount > 0)
+                    <li  class="{{ Request::path() == 'message/list' ? 'active' : '' }}"><a href="/message/list" style="color:red">Notification ({{$notificationcount}})</a></li>
+                    @else
+                    <li  class="{{ Request::path() == 'message/list' ? 'active' : '' }}"><a href="/message/list" >Notification </a></li>
+                    @endif
+               @endif
               <!--<li><a href="../navbar-static-top/">Static top</a></li>
               <li><a href="../navbar-fixed-top/">Fixed top</a></li>-->
             </ul>

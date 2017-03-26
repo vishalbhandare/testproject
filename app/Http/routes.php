@@ -15,6 +15,7 @@
 //    return view('welcome');
 //});
 Route::get('/', 'User\HomeController@index');
+Route::get('/permissiondenied', 'User\HomeController@permissiondenied');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

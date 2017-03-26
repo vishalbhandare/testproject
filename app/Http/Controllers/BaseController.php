@@ -10,24 +10,24 @@ use Auth;
 use Illuminate\Contracts\View\View;
 use \Illuminate\Support\Facades\DB;
 
+
 class BaseController extends Controller{
-  
+ 
+    
   public function __construct()
   {
-      
-    if (Auth::check()){
-       
-        //DB::enableQueryLog();
-        $count = Message::where('receiver_id', Auth::user()->id)->where('status_id',1)->count();
- 
-        // Sharing is caring
-       // View::share('notificationcount', $count);
-          view()->share('notificationcount', $count);
-       //   print_r(DB::getQueryLog());
-    }
-      //view()->share('isuserloggedin', Auth::check());
-  }  
+     $this->setNotificationCount();
+  } 
   
+  private function setNotificationCount(){
+     if (Auth::check()){        
+            //DB::enableQueryLog();
+            $count = Message::where('receiver_id', Auth::user()->id)->where('status_id',1)->count();
+           // View::share('notificationcount', $count);
+            view()->share('notificationcount', $count);
+        }  
+  } 
   
+
   
 }
